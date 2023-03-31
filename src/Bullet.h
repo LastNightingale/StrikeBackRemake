@@ -1,0 +1,17 @@
+#pragma once
+#include <sfml/Graphics.hpp>
+#include "GameObject.h"
+
+class Bullet : public GameObject
+{
+public:
+private:
+	sf::RectangleShape m_Body;
+public:
+	Bullet(float y, Colors color);
+	bool Collision(GameObject* other) override;
+	void AddToRenderList(RenderList& list) override;
+	void Update(float dt) override;
+	inline sf::FloatRect GetGlobalBounds() override { return m_Body.getGlobalBounds(); }
+	inline sf::Color GetColor() const { return m_Body.getFillColor(); }
+};
