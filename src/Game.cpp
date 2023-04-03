@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Enemy.h"
 #include "Player.h"
+#include <iostream>
 
 Game::Game()
 {
@@ -20,8 +21,6 @@ void Game::Run()
 		});
 	this->Render();
 	UpdateThread.join();
-	/*Update(m_Dt);
-	Render();*/
 }
 
 void Game::SetStartObjects()
@@ -39,10 +38,10 @@ void Game::SetCurrentColor(unsigned int color)
 {
 	m_Mutex.lock();
 	Block* lastblock = reinterpret_cast<Block*>(m_Objects[m_CurrentColor]);
-	lastblock->UnchooseColor();
+	lastblock->ColorUnchoose();
 	m_CurrentColor = color;
 	Block* currentblock = reinterpret_cast<Block*>(m_Objects[m_CurrentColor]);
-	currentblock->ChooseColor();
+	currentblock->ColorChoose();
 	m_Mutex.unlock();
 }
 
@@ -75,6 +74,7 @@ void Game::Update()
 {	
 	while (m_isGoing)
 	{
+		m_Semaphore.Wait();
 		m_Mutex.lock();
 		m_Dt = m_Clock.getElapsedTime().asSeconds();
 		m_Clock.restart();
@@ -100,6 +100,7 @@ void Game::Update()
 			m_Objects.push_back(new Enemy(rand() % 674 + 113, static_cast<Colors>(rand() % 4)));
 			m_Spawntime = 0.f;
 		}
+		std::cout << m_Dt << std::endl;
 		m_Mutex.unlock();
 	}	
 		
@@ -109,6 +110,7 @@ void Game::Render()
 {
 	while (m_Window.isOpen())
 	{
+		m_Semaphore.Signal();
 		m_Window.clear(sf::Color::Black);
 		RenderList list;
 		m_Mutex.lock();
@@ -122,17 +124,19 @@ void Game::Render()
 		sf::Event event;
 		while (m_Window.pollEvent(event))
 		{
+			m_Mutex.lock();
 			if (event.type == sf::Event::EventType::Closed || m_Player->m_Health == 0) m_Window.close();
 			if (event.type == sf::Event::EventType::MouseButtonReleased)
 				if (event.key.code == sf::Mouse::Button::Left)
 				{
-					m_Mutex.lock();
+					
 					m_Objects.push_back(m_Player->Shoot(static_cast<Colors>(m_CurrentColor)));
-					m_Mutex.unlock();
+					
 				}					
 			if (event.type == sf::Event::EventType::KeyPressed)
 				if (KeyBinds.find(event.key.code) != KeyBinds.end())
 					SetCurrentColor(KeyBinds[event.key.code]);
+			m_Mutex.unlock();
 		}
 
 	}

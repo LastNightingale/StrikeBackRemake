@@ -10,7 +10,7 @@ private:
 	OuterBlock m_Outer;	
 public:
 	Block(sf::Vector2f position, sf::Color color);	
-	void ChooseColor();
-	void UnchooseColor();
+	void ColorChoose();
+	void ColorUnchoose();
 	void AddToRenderList(RenderList& list) override;
 };

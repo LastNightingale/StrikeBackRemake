@@ -6,13 +6,13 @@ Block::Block(sf::Vector2f position, sf::Color color)
 	m_Outer = OuterBlock(position);
 }
 
-void Block::ChooseColor()
+void Block::ColorChoose()
 {
 	isActive = true;
 	m_Outer.SetColor({ 70, 70, 70 });
 }
 
-void Block::UnchooseColor()
+void Block::ColorUnchoose()
 {
 	isActive = false;
 	m_Outer.SetColor(sf::Color::Black);

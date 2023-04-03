@@ -3,6 +3,7 @@
 #include "Player.h"
 #include <vector>
 #include <mutex>
+#include "Semaphore.h"
 
 #define Color_Amount 5
 
@@ -15,6 +16,7 @@ private:
 	sf::Clock m_Clock;
 	Player* m_Player;
 	std::mutex m_Mutex;
+	Semaphore m_Semaphore;
 	unsigned int m_Bullets;
 	unsigned int m_CurrentColor;
 	float m_Spawntime;
