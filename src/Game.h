@@ -12,6 +12,7 @@ private:
 	std::vector<GameObject*> m_Objects;
 	std::vector<GameObject*> m_DestroyedObjects;
 	sf::RenderWindow m_Window{ sf::VideoMode(1400,900), "Strike Back Updated", sf::Style::Default };
+	sf::Clock m_Clock;
 	Player* m_Player;
 	std::mutex m_Mutex;
 	unsigned int m_Bullets;
@@ -26,6 +27,6 @@ private:
 	void SetStartObjects();
 	void SetCurrentColor(unsigned int color);
 	void GameCollision();
-	void Update(float dt);
+	void Update();
 	void Render();
 };
