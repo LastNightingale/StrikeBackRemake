@@ -4,6 +4,7 @@
 
 Game::Game()
 {
+	m_isGoing = true;
 	m_Spawntime = 0.f;
 	m_CurrentColor = 0;
 	SetStartObjects();
@@ -82,28 +83,33 @@ void Game::GameCollision()
 
 void Game::Update(float dt)
 {	
-	for (int i = 5; i < m_Objects.size(); i++)
+	while (m_isGoing)
 	{
-		for (int j = 5; j < m_Objects.size(); j++)
+		m_Mutex.lock();
+		for (int i = 5; i < m_Objects.size(); i++)
 		{
-			if (m_Objects[i]->GetGlobalBounds().intersects(m_Objects[j]->GetGlobalBounds()))
+			for (int j = 5; j < m_Objects.size(); j++)
 			{
-				if (m_Objects[i]->Collision(m_Objects[j]))
+				if (m_Objects[i]->GetGlobalBounds().intersects(m_Objects[j]->GetGlobalBounds()))
 				{
-					m_DestroyedObjects.push_back(m_Objects[j]);
+					if (m_Objects[i]->Collision(m_Objects[j]))
+					{
+						m_DestroyedObjects.push_back(m_Objects[j]);
+					}
 				}
 			}
 		}
-	}
-	GameCollision();
-	for (GameObject* object : m_Objects)
-		object->Update(dt);
-	m_Spawntime += dt;
-	if (m_Spawntime >= 1.0)
-	{
-		m_Objects.push_back(new Enemy(rand() % 674 + 113, static_cast<Colors>(rand()%4)));
-		m_Spawntime = 0.f;
-	}
+		GameCollision();
+		for (GameObject* object : m_Objects)
+			object->Update(dt);
+		m_Spawntime += dt;
+		if (m_Spawntime >= 1.0)
+		{
+			m_Objects.push_back(new Enemy(rand() % 674 + 113, static_cast<Colors>(rand() % 4)));
+			m_Spawntime = 0.f;
+		}
+		m_Mutex.unlock();
+	}	
 		
 }
 
@@ -111,8 +117,10 @@ void Game::Render()
 {
 	m_Window.clear(sf::Color::Black);
 	RenderList list;
+	m_Mutex.lock();
 	for (auto& object = m_Objects.rbegin(); object != m_Objects.rend(); object++)
 		(*object)->AddToRenderList(list);
+	m_Mutex.unlock();
 	for (auto rect : list.Rects)
 		m_Window.draw(rect);
 	m_Window.display();
