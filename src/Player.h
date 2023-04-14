@@ -9,7 +9,7 @@ private:
 	sf::RectangleShape m_Body;
 public:
 	Player();
-	bool Collision(GameObject* other) override;
+	CollisionConsequence Collision(GameObject* other) override;
 	void AddToRenderList(RenderList& list) override;
 	void Update(float dt) override;
 	inline sf::FloatRect GetGlobalBounds() override { return m_Body.getGlobalBounds(); }

@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Game.h"
 #include "Enemy.h"
 #include "Player.h"
 #include <iostream>
@@ -8,6 +9,7 @@ Game::Game()
 	m_isGoing = true;
 	m_Spawntime = 0.f;
 	m_CurrentColor = 0;
+	m_Health = 100;
 	SetStartObjects();
 	SetCurrentColor(0);
 }
@@ -50,12 +52,7 @@ void Game::GameCollision()
 		for (int i = 0; i < m_Objects.size(); i++)
 		{
 			if (object == m_Objects[i])
-			{
-				if (Enemy* slain = dynamic_cast<Enemy*>(object))
-					if (slain->m_IsWrong)
-					{
-						m_Objects.push_back(slain->ReturnHit(m_Player));
-					}
+			{				
 				GameObject* temp = m_Objects[i];
 				m_Objects[i] = m_Objects[m_Objects.size() - 1];
 				m_Objects[m_Objects.size() - 1] = temp;
@@ -82,10 +79,18 @@ void Game::Update()
 			{
 				if (m_Objects[i]->GetGlobalBounds().intersects(m_Objects[j]->GetGlobalBounds()))
 				{
-					if (m_Objects[i]->Collision(m_Objects[j]))
+					CollisionConsequence cc = m_Objects[i]->Collision(m_Objects[j]);
+					if (cc.toDestroyObject)
 					{
 						m_DestroyedObjects.push_back(m_Objects[j]);
-					}
+					}	
+					if (cc.typeConsequence == Consequenses::GET_HIT)
+						m_Health -= 10;
+					if (cc.typeConsequence == Consequenses::WRONG_COLOR)
+					{
+						auto slain = dynamic_cast<Enemy*>(m_Objects[i]);
+						m_Objects.push_back(slain->ReturnHit(m_Player));
+					}						
 				}
 			}
 		}
@@ -95,10 +100,9 @@ void Game::Update()
 		m_Spawntime += m_Dt;
 		if (m_Spawntime >= 1.0)
 		{
-			m_Objects.push_back(new Enemy(rand() % 674 + 113, static_cast<Colors>(rand() % 4)));
+			m_Objects.push_back(new Enemy(rand() % 674 + 113, static_cast<Colors>(rand() % 5)));
 			m_Spawntime = 0.f;
 		}
-		//std::cout << m_Dt << std::endl;
 		m_Mutex.unlock();
 	}	
 		
@@ -123,7 +127,7 @@ void Game::Render()
 		while (m_Window.pollEvent(event))
 		{
 			m_Mutex.lock();
-			if (event.type == sf::Event::EventType::Closed || m_Player->m_Health == 0) m_Window.close();
+			if (event.type == sf::Event::EventType::Closed || m_Health == 0) m_Window.close();
 			if (event.type == sf::Event::EventType::MouseButtonReleased)
 				if (event.key.code == sf::Mouse::Button::Left)
 				{

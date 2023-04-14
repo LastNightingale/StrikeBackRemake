@@ -10,7 +10,7 @@ private:
 	Player* m_Aim;
 public:
 	BackStrike(sf::Vector2f position, Player* aim);
-	bool Collision(GameObject* other) override;
+	CollisionConsequence Collision(GameObject* other) override;
 	void AddToRenderList(RenderList& list) override;
 	void Update(float dt) override;
 	inline sf::FloatRect GetGlobalBounds() override { return m_Body.getGlobalBounds(); }

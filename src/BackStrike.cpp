@@ -10,9 +10,9 @@ BackStrike::BackStrike(sf::Vector2f position, Player* aim)
 	m_Aim = aim;
 }
 
-bool BackStrike::Collision(GameObject* other)
+CollisionConsequence BackStrike::Collision(GameObject* other)
 {
-	return false;
+	return { false, Consequenses::NO_CONSEQUENCE };
 }
 
 void BackStrike::AddToRenderList(RenderList& list)

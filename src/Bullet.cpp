@@ -9,9 +9,9 @@ Bullet::Bullet(float y, Colors color)
 	m_Body.setOrigin(5, 5);
 }
 
-bool Bullet::Collision(GameObject* other)
+CollisionConsequence Bullet::Collision(GameObject* other)
 {
-	return (dynamic_cast<Enemy*>(other));
+	return { static_cast<bool>(dynamic_cast<Enemy*>(other)), Consequenses::NO_CONSEQUENCE };
 }
 
 void Bullet::AddToRenderList(RenderList& list)

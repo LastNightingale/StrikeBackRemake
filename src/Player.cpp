@@ -10,14 +10,12 @@ Player::Player()
 	m_Body.setFillColor(sf::Color::Blue);
 }
 
-bool Player::Collision(GameObject* other)
+CollisionConsequence Player::Collision(GameObject* other)
 {
 	if (BackStrike* bstr = dynamic_cast<BackStrike*>(other))
-	{
-		m_Health -= 10;
-		return true;
-	}
-	else return false;
+		return { true, Consequenses::GET_HIT };
+	else return { false, Consequenses::NO_CONSEQUENCE };
+	
 }
 
 void Player::AddToRenderList(RenderList& list)

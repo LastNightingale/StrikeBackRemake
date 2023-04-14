@@ -8,13 +8,30 @@ struct RenderList
 	std::vector<sf::RectangleShape> Rects;
 };
 
+enum class Consequenses
+{
+	NO_CONSEQUENCE = 0,
+	GET_HIT = 1,
+	WRONG_COLOR = 2
+};
+
+struct CollisionConsequence
+{
+	bool toDestroyObject;
+	Consequenses typeConsequence;
+};
+
+
 class GameObject
 {
 public:
 	virtual void Update(float dt) {};
 	virtual void AddToRenderList(RenderList& list) = 0;
-	virtual bool Collision(GameObject* other) { return false; }
+	virtual CollisionConsequence Collision(GameObject* other) { return { false, Consequenses::NO_CONSEQUENCE }; }
 	virtual sf::FloatRect GetGlobalBounds() { return sf::FloatRect(); }
+
+	/*template <typename Type>
+	bool IsA<Type>() const { return dynamic_cast<const Type*>(this); }*/
 };
 
 enum Colors
@@ -25,6 +42,7 @@ enum Colors
 	WHITE = 3,
 	CRIMSON = 4
 };
+
 
 static std::unordered_map< sf::Keyboard::Key, Colors> KeyBinds = {
 	{sf::Keyboard::Key::Num1, YELLOW},
