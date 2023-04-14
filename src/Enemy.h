@@ -16,5 +16,5 @@ public:
 	void Update(float dt) override;
 	BackStrike* ReturnHit(Player* Aim) { return new BackStrike(m_Body.getPosition(), Aim); }
 	inline sf::FloatRect GetGlobalBounds() override { return m_Body.getGlobalBounds(); }
-	inline sf::Color GetColor() const { return m_Body.getFillColor(); }
+	inline const sf::Color& GetColor() const { return m_Body.getFillColor(); }
 };
