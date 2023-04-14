@@ -36,13 +36,11 @@ void Game::SetStartObjects()
 
 void Game::SetCurrentColor(unsigned int color)
 {
-	m_Mutex.lock();
 	Block* lastblock = reinterpret_cast<Block*>(m_Objects[m_CurrentColor]);
 	lastblock->ColorUnchoose();
 	m_CurrentColor = color;
 	Block* currentblock = reinterpret_cast<Block*>(m_Objects[m_CurrentColor]);
 	currentblock->ColorChoose();
-	m_Mutex.unlock();
 }
 
 void Game::GameCollision()
@@ -78,9 +76,9 @@ void Game::Update()
 		m_Mutex.lock();
 		m_Dt = m_Clock.getElapsedTime().asSeconds();
 		m_Clock.restart();
-		for (int i = 5; i < m_Objects.size(); i++)
+		for (int i = Unmovables; i < m_Objects.size(); i++)
 		{
-			for (int j = 5; j < m_Objects.size(); j++)
+			for (int j = Unmovables; j < m_Objects.size(); j++)
 			{
 				if (m_Objects[i]->GetGlobalBounds().intersects(m_Objects[j]->GetGlobalBounds()))
 				{
@@ -100,7 +98,7 @@ void Game::Update()
 			m_Objects.push_back(new Enemy(rand() % 674 + 113, static_cast<Colors>(rand() % 4)));
 			m_Spawntime = 0.f;
 		}
-		std::cout << m_Dt << std::endl;
+		//std::cout << m_Dt << std::endl;
 		m_Mutex.unlock();
 	}	
 		

@@ -6,6 +6,7 @@
 #include "Semaphore.h"
 
 #define Color_Amount 5
+#define Unmovables 5
 
 class Game
 {

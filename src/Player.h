@@ -14,6 +14,5 @@ public:
 	void Update(float dt) override;
 	inline sf::FloatRect GetGlobalBounds() override { return m_Body.getGlobalBounds(); }
 	Bullet* Shoot(Colors color);
-	inline sf::FloatRect& GetGlobalBounds() const { return m_Body.getGlobalBounds(); }
 	inline sf::Vector2f GetPosition() const { return m_Body.getPosition(); }
 };

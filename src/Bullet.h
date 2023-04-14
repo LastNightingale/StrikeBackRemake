@@ -13,5 +13,5 @@ public:
 	void AddToRenderList(RenderList& list) override;
 	void Update(float dt) override;
 	inline sf::FloatRect GetGlobalBounds() override { return m_Body.getGlobalBounds(); }
-	inline sf::Color GetColor() const { return m_Body.getFillColor(); }
+	inline const sf::Color& GetColor() { return m_Body.getFillColor(); }
 };
