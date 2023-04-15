@@ -3,8 +3,7 @@
 
 Destroyer::Destroyer()
 {
-	m_Area.setSize({75, 900});
-	//m_Area.setFillColor(sf::Color::Cyan); //transparent
+	m_Area.setSize({75, 950});
 	m_Area.setPosition({ 242.5, 0 });
 }
 

@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "Destroyer.h"
+#include "Spawner.h"
 #include <iostream>
 
 Game::Game()
@@ -29,9 +30,11 @@ void Game::SetStartObjects()
 {
 	for (int i = 0; i < Color_Amount; i++)
 	{
-		m_Objects.push_back(new Block(sf::Vector2f(140.f, (900 - Color_Amount * 100 - (Color_Amount - 1) * 50) / 2 + 50 + 150 * i),
+		m_Objects.push_back(new Block(sf::Vector2f(140.f, 50 + (900 - Color_Amount * 100 - (Color_Amount - 1) * 50) / 2 + 50 + 150 * i),
 			ColorBinds[static_cast<Colors>(i)]));
 	}
+	m_Spawner = new Spawner();
+	m_Objects.push_back(m_Spawner);
 	m_Objects.push_back(new Destroyer());
 	m_Player = new Player();
 	m_Objects.push_back(m_Player);
@@ -101,7 +104,7 @@ void Game::Update()
 		m_Spawntime += m_Dt;
 		if (m_Spawntime >= 1.0)
 		{
-			m_Objects.push_back(new Enemy(rand() % 674 + 113, static_cast<Colors>(rand() % 5)));
+			m_Objects.push_back(m_Spawner->SpawnEnemy());
 			m_Spawntime = 0.f;
 		}
 		m_Mutex.unlock();

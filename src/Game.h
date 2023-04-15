@@ -1,6 +1,7 @@
 #pragma once
 #include "Block.h"
 #include "Player.h"
+#include "Spawner.h"
 #include <vector>
 #include <mutex>
 #include <queue>
@@ -14,9 +15,10 @@ class Game
 private:
 	std::vector<GameObject*> m_Objects;
 	std::vector<GameObject*> m_DestroyedObjects;
-	sf::RenderWindow m_Window{ sf::VideoMode(1400,900), "Strike Back Remake", sf::Style::Default };
+	sf::RenderWindow m_Window{ sf::VideoMode(1400,950), "Strike Back Remake", sf::Style::Default };
 	sf::Clock m_Clock;
 	Player* m_Player;
+	Spawner* m_Spawner;
 	std::mutex m_Mutex;
 	Semaphore m_Semaphore;
 	unsigned int m_Bullets;
