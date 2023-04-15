@@ -4,6 +4,7 @@
 class Destroyer : public GameObject
 {
 public:
+	Destroyer();
 	void Update(float dt) override {};
 	void AddToRenderList(RenderList& list) override {};
 	CollisionConsequence Collision(GameObject* other) override;

@@ -1,7 +1,7 @@
 #include "Game.h"
-#include "Game.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "Destroyer.h"
 #include <iostream>
 
 Game::Game()
@@ -32,6 +32,7 @@ void Game::SetStartObjects()
 		m_Objects.push_back(new Block(sf::Vector2f(140.f, (900 - Color_Amount * 100 - (Color_Amount - 1) * 50) / 2 + 50 + 150 * i),
 			ColorBinds[static_cast<Colors>(i)]));
 	}
+	m_Objects.push_back(new Destroyer());
 	m_Player = new Player();
 	m_Objects.push_back(m_Player);
 }
