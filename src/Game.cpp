@@ -133,15 +133,29 @@ void Game::Render()
 			m_Mutex.lock();
 			if (event.type == sf::Event::EventType::Closed || m_Health == 0) m_Window.close();
 			if (event.type == sf::Event::EventType::MouseButtonReleased)
+			{
 				if (event.key.code == sf::Mouse::Button::Left)
 				{
-					
 					m_Objects.push_back(m_Player->Shoot(static_cast<Colors>(m_CurrentColor)));
-					
-				}					
+				}				
+			}		
+			if (event.type == sf::Event::EventType::KeyReleased)
+			{
+				if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::PageUp)
+					m_Player->m_toTop = { 0.f, 0.f };
+				if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::PageDown)
+					m_Player->m_toBot = { 0.f, 0.f };
+			}
 			if (event.type == sf::Event::EventType::KeyPressed)
+			{
 				if (KeyBinds.find(event.key.code) != KeyBinds.end())
 					SetCurrentColor(KeyBinds[event.key.code]);
+				if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::PageUp)
+					m_Player->m_toTop = { 0.f, -500.f };
+				if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::PageDown)
+					m_Player->m_toBot = { 0.f, 500.f };
+			}
+				
 			m_Mutex.unlock();
 		}
 

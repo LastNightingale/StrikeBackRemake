@@ -3,9 +3,10 @@
 #include "Bullet.h"
 class Player : public GameObject
 {
-public:
-	unsigned int m_Health;
-private:
+public:	
+	sf::Vector2f m_toTop;
+	sf::Vector2f m_toBot;
+private:	
 	sf::RectangleShape m_Body;
 public:
 	Player();

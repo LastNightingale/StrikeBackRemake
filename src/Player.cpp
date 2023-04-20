@@ -3,7 +3,6 @@
 
 Player::Player()
 {
-	m_Health = 100;
 	m_Body.setSize(sf::Vector2f(75, 75));
 	m_Body.setOrigin(37.5, 37.5);
 	m_Body.setPosition(sf::Vector2f(280, 450));
@@ -25,8 +24,9 @@ void Player::AddToRenderList(RenderList& list)
 
 void Player::Update(float dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) this->m_Body.move({ 0.f , -500.f * dt });
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) this->m_Body.move({ 0.f , 500.f * dt });
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) this->m_Body.move({ 0.f , -500.f * dt });
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) this->m_Body.move({ 0.f , 500.f * dt });*/
+	this->m_Body.move((m_toBot + m_toTop) * dt);
 }
 
 Bullet* Player::Shoot(Colors color)
