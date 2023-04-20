@@ -36,6 +36,8 @@ void Game::SetStartObjects()
 	m_Spawner = new Spawner();
 	m_Objects.push_back(m_Spawner);
 	m_Objects.push_back(new Destroyer());
+	m_Objects.push_back(new Wall({ 500, 10 }, { 140, 900 }));
+	m_Objects.push_back(new Wall({ 500, 10 }, { 140, 100 }));
 	m_Player = new Player();
 	m_Objects.push_back(m_Player);
 }
@@ -141,18 +143,18 @@ void Game::Render()
 			}		
 			if (event.type == sf::Event::EventType::KeyReleased)
 			{
-				if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::PageUp)
+				if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up)
 					m_Player->m_toTop = { 0.f, 0.f };
-				if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::PageDown)
+				if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down)
 					m_Player->m_toBot = { 0.f, 0.f };
 			}
 			if (event.type == sf::Event::EventType::KeyPressed)
 			{
 				if (KeyBinds.find(event.key.code) != KeyBinds.end())
 					SetCurrentColor(KeyBinds[event.key.code]);
-				if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::PageUp)
+				if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up)
 					m_Player->m_toTop = { 0.f, -500.f };
-				if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::PageDown)
+				if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down)
 					m_Player->m_toBot = { 0.f, 500.f };
 			}
 				

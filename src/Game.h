@@ -2,6 +2,7 @@
 #include "Block.h"
 #include "Player.h"
 #include "Spawner.h"
+#include "Wall.h"
 #include <vector>
 #include <mutex>
 #include <queue>
