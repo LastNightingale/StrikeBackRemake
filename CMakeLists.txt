@@ -4,6 +4,6 @@ project(StrikeBack)
 
 add_subdirectory ("src")
 
-add_executable(StrikeBack Application.cpp )
+add_executable(StrikeBack Application.cpp  "src/Wall.h")
 
 target_link_libraries(StrikeBack SBSources)

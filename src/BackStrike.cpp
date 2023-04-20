@@ -15,10 +15,10 @@ CollisionConsequence BackStrike::Collision(GameObject* other)
 	return { false, Consequenses::NO_CONSEQUENCE };
 }
 
-void BackStrike::AddToRenderList(RenderList& list)
-{
-	list.Rects.push_back(m_Body);
-}
+//void BackStrike::AddToRenderList(RenderList& list)
+//{
+//	list.Rects.push_back(m_Body);
+//}
 
 void BackStrike::Update(float dt)
 {

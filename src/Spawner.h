@@ -1,15 +1,15 @@
 #pragma once
-#include "GameObject.h"
+#include "Physical.h"
 #include "Enemy.h"
 
-class Spawner : public GameObject
+class Spawner : public Physical
 {
 private:
-	sf::RectangleShape m_Area;
+	//sf::RectangleShape m_Area;
 public:
 	Spawner();
 	void AddToRenderList(RenderList& list) override {};
 	CollisionConsequence Collision(GameObject* other) override;
-	sf::FloatRect GetGlobalBounds() { return sf::FloatRect(); }
+	//sf::FloatRect GetGlobalBounds() override { return sf::FloatRect(); }
 	Enemy* SpawnEnemy();
 };

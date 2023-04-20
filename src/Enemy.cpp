@@ -22,10 +22,10 @@ CollisionConsequence Enemy::Collision(GameObject* other)
 	
 }
 
-void Enemy::AddToRenderList(RenderList& list)
-{
-	list.Rects.push_back(m_Body);
-}
+//void Enemy::AddToRenderList(RenderList& list)
+//{
+//	list.Rects.push_back(m_Body);
+//}
 
 void Enemy::Update(float dt)
 {

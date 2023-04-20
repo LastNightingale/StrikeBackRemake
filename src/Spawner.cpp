@@ -3,8 +3,8 @@
 
 Spawner::Spawner()
 {
-	m_Area.setSize({ 50, 900 });
-	m_Area.setPosition({ 1400, 50 });
+	m_Body.setSize({ 50, 900 });
+	m_Body.setPosition({ 1400, 50 });
 }
 
 CollisionConsequence Spawner::Collision(GameObject* other)
@@ -14,8 +14,8 @@ CollisionConsequence Spawner::Collision(GameObject* other)
 
 Enemy* Spawner::SpawnEnemy()
 {
-	return new Enemy(rand() % (int)(m_Area.getPosition().y + m_Area.getSize().y - (38 + 50) ) +
-		(int)(m_Area.getPosition().y + (38 + 50) ), static_cast<Colors>(rand() % 5)); 
+	return new Enemy(rand() % (int)(m_Body.getPosition().y + m_Body.getSize().y - (38 + 50) ) +
+		(int)(m_Body.getPosition().y + (38 + 50) ), static_cast<Colors>(rand() % 5));
 }
 
 //new Enemy(rand() % 674 + 113, static_cast<Colors>(rand() % 5))

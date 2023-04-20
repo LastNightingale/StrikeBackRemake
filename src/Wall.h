@@ -1,16 +1,10 @@
 #pragma once
 #include "Physical.h"
 
-class Destroyer : public Physical
+class Wall : public Physical
 {
 public:
-	Destroyer();
 	void Update(float dt) override {};
 	void AddToRenderList(RenderList& list) override {};
 	CollisionConsequence Collision(GameObject* other) override;
-	//inline sf::FloatRect GetGlobalBounds() override { return m_Area.getGlobalBounds(); }
-private:
-	//sf::RectangleShape m_Area;
 };
-
-

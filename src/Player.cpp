@@ -17,10 +17,10 @@ CollisionConsequence Player::Collision(GameObject* other)
 	
 }
 
-void Player::AddToRenderList(RenderList& list)
-{
-	list.Rects.push_back(m_Body);
-}
+//void Player::AddToRenderList(RenderList& list)
+//{
+//	list.Rects.push_back(m_Body);
+//}
 
 void Player::Update(float dt)
 {

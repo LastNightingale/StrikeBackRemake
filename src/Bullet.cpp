@@ -14,10 +14,10 @@ CollisionConsequence Bullet::Collision(GameObject* other)
 	return { static_cast<bool>(dynamic_cast<Enemy*>(other)), Consequenses::NO_CONSEQUENCE };
 }
 
-void Bullet::AddToRenderList(RenderList& list)
-{
-	list.Rects.push_back(m_Body);
-}
+//void Bullet::AddToRenderList(RenderList& list)
+//{
+//	list.Rects.push_back(m_Body);
+//}
 
 void Bullet::Update(float dt)
 {
