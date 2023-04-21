@@ -8,8 +8,8 @@ public:
 	InnerBlock() = default;
 	InnerBlock(sf::Vector2f position, const sf::Color& color)
 	{
-		m_Body.setSize({ 50, 50 });
-		m_Body.setOrigin({25, 25 });
+		m_Body.setSize({ BlockParametrs::InnerBlockSize, BlockParametrs::InnerBlockSize });
+		m_Body.setOrigin({ BlockParametrs::InnerBlockSize / 2.f, BlockParametrs::InnerBlockSize / 2.f });
 		m_Body.setPosition(position);
 		m_Body.setFillColor(color);
 	}
@@ -24,11 +24,11 @@ public:
 	OuterBlock() = default;
 	OuterBlock(sf::Vector2f position)
 	{
-		m_Body.setSize({ 100, 100 });
-		m_Body.setOrigin({50, 50 });
+		m_Body.setSize({ BlockParametrs::OuterBlockSize, BlockParametrs::OuterBlockSize });
+		m_Body.setOrigin({ BlockParametrs::OuterBlockSize / 2.f, BlockParametrs::OuterBlockSize / 2.f });
 		m_Body.setPosition(position);
 		m_Body.setOutlineColor(sf::Color::White);
-		m_Body.setOutlineThickness(3);
+		m_Body.setOutlineThickness(BlockParametrs::OuterBlockThickness);
 		m_Body.setFillColor(sf::Color::Black);
 	}
 	void SetColor(const sf::Color& color)

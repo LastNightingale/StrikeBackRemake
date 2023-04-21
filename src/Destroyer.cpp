@@ -3,8 +3,8 @@
 
 Destroyer::Destroyer()
 {
-	m_Body.setSize({75, 950});
-	m_Body.setPosition({ 242.5, 0 });
+	m_Body.setSize({DestroyerParametrs::DestroyerSizeX, DestroyerParametrs::DestroyerSizeY});
+	m_Body.setPosition({ DestroyerParametrs::DestroyerPositionX, DestroyerParametrs::DestroyerPositionY });
 }
 
 CollisionConsequence Destroyer::Collision(GameObject* other)

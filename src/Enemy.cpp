@@ -3,9 +3,9 @@
 Enemy::Enemy(float y, Colors color)
 {	
 	m_Body.setFillColor(ColorBinds[color]);
-	m_Body.setSize({ 75, 75 });
-	m_Body.setOrigin(37.5, 37.5);
-	m_Body.setPosition({ 1400.f, y });
+	m_Body.setSize({ EnemyParametrs::EnemySize, EnemyParametrs::EnemySize });
+	m_Body.setOrigin(EnemyParametrs::EnemySize / 2.f, EnemyParametrs::EnemySize / 2.f);
+	m_Body.setPosition({ GameParametrs::ScreenWidth, y });
 }
 
 CollisionConsequence Enemy::Collision(GameObject* other)
@@ -22,12 +22,7 @@ CollisionConsequence Enemy::Collision(GameObject* other)
 	
 }
 
-//void Enemy::AddToRenderList(RenderList& list)
-//{
-//	list.Rects.push_back(m_Body);
-//}
-
 void Enemy::Update(float dt)
 {
-	this->m_Body.move(-400 * dt, 0);
+	this->m_Body.move(EnemyParametrs::EnemySpeed * dt, 0);
 }

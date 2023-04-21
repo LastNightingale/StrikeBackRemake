@@ -3,10 +3,10 @@
 
 Bullet::Bullet(float y, Colors color)
 {
-	m_Body.setPosition({ 280.f, y });
+	m_Body.setPosition({ PlayerParametrs::PlayerPositionX, y });
 	m_Body.setFillColor(ColorBinds[color]);
-	m_Body.setSize({ 10, 10 });
-	m_Body.setOrigin(5, 5);
+	m_Body.setSize({ BulletParametrs::BulletSize, BulletParametrs::BulletSize });
+	m_Body.setOrigin(BulletParametrs::BulletSize / 2.f, BulletParametrs::BulletSize / 2.f);
 }
 
 CollisionConsequence Bullet::Collision(GameObject* other)
@@ -21,5 +21,5 @@ CollisionConsequence Bullet::Collision(GameObject* other)
 
 void Bullet::Update(float dt)
 {
-	this->m_Body.move(1000 * dt, 0);
+	this->m_Body.move(BulletParametrs::BulletSpeed * dt, 0);
 }

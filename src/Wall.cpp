@@ -1,9 +1,9 @@
 #include "Wall.h"
 #include "Player.h"
 
-Wall::Wall(sf::Vector2f size, sf::Vector2f position)
+Wall::Wall(sf::Vector2f position)
 {
-	m_Body.setSize(size);
+	m_Body.setSize({WallParametrs::WallSizeX, WallParametrs::WallSizeY});
 	m_Body.setPosition(position);
 }
 

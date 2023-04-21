@@ -3,9 +3,9 @@
 
 Player::Player()
 {
-	m_Body.setSize(sf::Vector2f(75, 75));
-	m_Body.setOrigin(37.5, 37.5);
-	m_Body.setPosition(sf::Vector2f(280, 450));
+	m_Body.setSize({ PlayerParametrs::PlayerSize, PlayerParametrs::PlayerSize });
+	m_Body.setOrigin(PlayerParametrs::PlayerSize / 2.f, PlayerParametrs::PlayerSize / 2.f);
+	m_Body.setPosition(sf::Vector2f(PlayerParametrs::PlayerPositionX, PlayerParametrs::PlayerPositionY));
 	m_Body.setFillColor(sf::Color::Blue);
 }
 
@@ -16,11 +16,6 @@ CollisionConsequence Player::Collision(GameObject* other)
 	else return { false, Consequenses::NO_CONSEQUENCE };
 	
 }
-
-//void Player::AddToRenderList(RenderList& list)
-//{
-//	list.Rects.push_back(m_Body);
-//}
 
 void Player::Update(float dt)
 {

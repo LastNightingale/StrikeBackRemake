@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Game.h"
 #include "Enemy.h"
 #include "Player.h"
 #include "Destroyer.h"
@@ -10,7 +11,7 @@ Game::Game()
 	m_isGoing = true;
 	m_Spawntime = 0.f;
 	m_CurrentColor = 0;
-	m_Health = 100;
+	m_Health = GameParametrs::HitPoints;
 	SetStartObjects();
 	SetCurrentColor(0);
 }
@@ -28,16 +29,19 @@ void Game::Run()
 
 void Game::SetStartObjects()
 {
-	for (int i = 0; i < Color_Amount; i++)
+	for (int i = 0; i < GameParametrs::ColorAmount; i++)
 	{
-		m_Objects.push_back(new Block(sf::Vector2f(140.f, 50 + (900 - Color_Amount * 100 - (Color_Amount - 1) * 50) / 2 + 50 + 150 * i),
+		m_Objects.push_back(new Block(sf::Vector2f(BlockParametrs::BlockZonePositionX, BlockParametrs::BlockZonePositionY + 
+			(BlockParametrs::BlockZoneSizeY - GameParametrs::ColorAmount * BlockParametrs::OuterBlockSize - 
+				(GameParametrs::ColorAmount - 1) * BlockParametrs::BlockZoneGap) / 2.f + BlockParametrs::BlockZoneGap +
+			(BlockParametrs::BlockZoneGap + BlockParametrs::OuterBlockSize) * i),
 			ColorBinds[static_cast<Colors>(i)]));
 	}
 	m_Spawner = new Spawner();
 	m_Objects.push_back(m_Spawner);
 	m_Objects.push_back(new Destroyer());
-	m_Objects.push_back(new Wall({ 500, 10 }, { 140, 900 }));
-	m_Objects.push_back(new Wall({ 500, 10 }, { 140, 100 }));
+	m_Objects.push_back(new Wall({ WallParametrs::WallPositionX, WallParametrs::BotWallPositionY }));
+	m_Objects.push_back(new Wall({ WallParametrs::WallPositionX, WallParametrs::TopWallPositionY }));
 	m_Player = new Player();
 	m_Objects.push_back(m_Player);
 }
@@ -71,6 +75,11 @@ void Game::GameCollision()
 	m_DestroyedObjects.clear();
 }
 
+void Game::GetHit()
+{
+	m_Health -= GameParametrs::Hit;
+}
+
 void Game::Update()
 {	
 	while (m_isGoing)
@@ -79,9 +88,9 @@ void Game::Update()
 		m_Mutex.lock();
 		m_Dt = m_Clock.getElapsedTime().asSeconds();
 		m_Clock.restart();
-		for (int i = Unmovables; i < m_Objects.size(); i++)
+		for (int i = GameParametrs::Unmovables; i < m_Objects.size(); i++)
 		{
-			for (int j = Unmovables; j < m_Objects.size(); j++)
+			for (int j = GameParametrs::Unmovables; j < m_Objects.size(); j++)
 			{
 				if (m_Objects[i]->GetGlobalBounds().intersects(m_Objects[j]->GetGlobalBounds()))
 				{
@@ -91,7 +100,7 @@ void Game::Update()
 						m_DestroyedObjects.push_back(m_Objects[j]);
 					}	
 					if (cc.typeConsequence == Consequenses::GET_HIT)
-						m_Health -= 10;
+						GetHit();
 					if (cc.typeConsequence == Consequenses::WRONG_COLOR)
 					{
 						auto slain = dynamic_cast<Enemy*>(m_Objects[i]);
@@ -133,7 +142,11 @@ void Game::Render()
 		while (m_Window.pollEvent(event))
 		{
 			m_Mutex.lock();
-			if (event.type == sf::Event::EventType::Closed || m_Health == 0) m_Window.close();
+			if (event.type == sf::Event::EventType::Closed || m_Health <= 0)
+			{
+				m_isGoing = false;
+				m_Window.close();				
+			}
 			if (event.type == sf::Event::EventType::MouseButtonReleased)
 			{
 				if (event.key.code == sf::Mouse::Button::Left)
@@ -153,11 +166,10 @@ void Game::Render()
 				if (KeyBinds.find(event.key.code) != KeyBinds.end())
 					SetCurrentColor(KeyBinds[event.key.code]);
 				if (event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up)
-					m_Player->m_toTop = { 0.f, -500.f };
+					m_Player->m_toTop = { 0.f, -1.f * PlayerParametrs::PlayerSpeed };
 				if (event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down)
-					m_Player->m_toBot = { 0.f, 500.f };
-			}
-				
+					m_Player->m_toBot = { 0.f, PlayerParametrs::PlayerSpeed };
+			}				
 			m_Mutex.unlock();
 		}
 

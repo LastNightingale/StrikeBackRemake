@@ -2,6 +2,7 @@
 #include <sfml/Graphics.hpp>
 #include <vector>
 #include <unordered_map>
+#include "Parametrs.hpp"
 
 struct RenderList
 {
