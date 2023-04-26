@@ -2,6 +2,7 @@
 #include "Block.h"
 #include "Player.h"
 #include "Spawner.h"
+#include "HealthBar.hpp"
 #include "Wall.h"
 #include <vector>
 #include <mutex>
@@ -15,6 +16,8 @@ private:
 	std::vector<GameObject*> m_DestroyedObjects;
 	sf::RenderWindow m_Window{ sf::VideoMode(GameParametrs::ScreenWidth, GameParametrs::ScreenHeight), "Strike Back Remake", sf::Style::Default };
 	sf::Clock m_Clock;
+	HealthBar* m_HealthBar;
+	//Bar* m_BulletBar;
 	Player* m_Player;
 	Spawner* m_Spawner;
 	std::mutex m_Mutex;
@@ -35,4 +38,5 @@ private:
 	void GetHit();
 	void Update();
 	void Render();
+	void FinishGame();
 };

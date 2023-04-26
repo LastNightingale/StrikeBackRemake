@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Game.h"
+#include "Game.h"
 #include "Enemy.h"
 #include "Player.h"
 #include "Destroyer.h"
@@ -37,6 +38,8 @@ void Game::SetStartObjects()
 			(BlockParametrs::BlockZoneGap + BlockParametrs::OuterBlockSize) * i),
 			ColorBinds[static_cast<Colors>(i)]));
 	}
+	m_HealthBar = new HealthBar();
+	m_Objects.push_back(m_HealthBar);
 	m_Spawner = new Spawner();
 	m_Objects.push_back(m_Spawner);
 	m_Objects.push_back(new Destroyer());
@@ -78,6 +81,7 @@ void Game::GameCollision()
 void Game::GetHit()
 {
 	m_Health -= GameParametrs::Hit;
+	m_HealthBar->GetHit();	
 }
 
 void Game::Update()
@@ -142,10 +146,9 @@ void Game::Render()
 		while (m_Window.pollEvent(event))
 		{
 			m_Mutex.lock();
-			if (event.type == sf::Event::EventType::Closed || m_Health <= 0)
+			if (event.type == sf::Event::EventType::Closed)
 			{
-				m_isGoing = false;
-				m_Window.close();				
+				FinishGame();
 			}
 			if (event.type == sf::Event::EventType::MouseButtonReleased)
 			{
@@ -172,6 +175,13 @@ void Game::Render()
 			}				
 			m_Mutex.unlock();
 		}
-
+		if (m_Health <= 0.f)
+			FinishGame();
 	}
+}
+
+void Game::FinishGame()
+{
+	m_isGoing = false;
+	m_Window.close();
 }

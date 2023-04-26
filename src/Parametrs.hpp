@@ -8,7 +8,7 @@ struct GameParametrs
 	static constexpr float HitPoints = 100.f;
 	static constexpr float Hit = 10.f;
 	static constexpr int ColorAmount = 5;
-	static constexpr int Unmovables = 5;
+	static constexpr int Unmovables = 6;
 };
 
 struct PlayerParametrs
@@ -71,4 +71,15 @@ struct BlockParametrs
 	static constexpr float BlockZonePositionY = 50.f;
 	static constexpr float BlockZoneSizeY = 900.f;
 	static constexpr float BlockZoneGap = 50.f;
+};
+
+struct BarParametrs
+{
+	static constexpr int BarOutlineThickness = 3;
+	static constexpr float HealthBarSizeX = 400.f;
+	static constexpr float HealthBarSizeY = 50.f;
+	static constexpr float HealthBarPositionX = 200.f;
+	static constexpr float HealthBarPositionY = 10.f;
+	static constexpr float HealthBarSegmentSizeX = 20.f;
+	static constexpr float HealthBarMaxNumber = 20.f;
 };
